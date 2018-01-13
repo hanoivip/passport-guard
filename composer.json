@@ -1,0 +1,29 @@
+{
+	"name" : "hanoivip/passport-guard",
+	"description" : "Authentication guard based on laravel passport",
+	"authors" : [{
+			"name" : "Hanoi Vip",
+			"email" : "game.oh.vn@gmail.com"
+		}
+	],
+	"autoload" : {
+		"psr-4" : {
+			"Hanoivip\\PassportGuard\\" : "src/"
+		}
+	},
+	"require" : {
+		"php" : ">=7.0.0",
+		"fideloper/proxy" : "~3.3",
+		"guzzlehttp/guzzle" : "^6.3",
+		"laravel/framework" : "5.5.*",
+		"laravel/tinker" : "~1.0",
+		"mervick/curl-helper" : "^1.1"
+	},
+	"extra" : {
+		"laravel" : {
+			"providers" : [
+				"Hanoivip\\PassportGuard\\AuthServiceProvider"
+			]
+		}
+	}
+}
