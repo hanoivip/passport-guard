@@ -60,7 +60,7 @@ class AccessTokenGuard implements Guard
         
         if (empty($token))
         {
-            Log::debug('...' . print_r($this->request->cookies, true));
+            //Log::debug('...' . print_r($this->request->cookies, true));
             $token = $this->request->cookies->get($this->inputKey);
         }
         

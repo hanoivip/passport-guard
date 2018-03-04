@@ -7,18 +7,18 @@ Route::middleware('web')->get('/login', function () {
         'response_type' => 'code',
         'scope' => ''
     ]);
-    return redirect(config('passport.authorize') . "?" . $query);
+    return redirect()->away(config('passport.authorize') . "?" . $query);
 })->name('login');
 Route::middleware('web')->get('/logout', function () {
     Cookie::queue(Cookie::forget('access_token'));
     Cookie::queue(Cookie::forget('laravel_session'));
-    return redirect(config('passport.logout') . '?redirect_uri=' . route('logoutsuccess'));
+    return redirect()->away(config('passport.logout') . '?redirect_uri=' . route('logoutsuccess'));
 })->name('logout');
 Route::middleware('web')->get('/logoutsuccess', function () {
     return view('hanoivip::landing');
 })->name('logoutsuccess');
 Route::middleware('web')->get('/register', function () {
-    return redirect(config('passport.register'));
+    return redirect()->away(config('passport.register'));
 })->name('register');
 Route::middleware('web')->get('/callback', function (Illuminate\Http\Request $request) {
     $http = new \GuzzleHttp\Client;
