@@ -21,8 +21,6 @@ class EncryptToken
         $this->encrypter = $encrypter;
     }
 
-    
-
     public function handle($request, Closure $next)
     {
         return $this->encrypt($next($this->decrypt($request)));

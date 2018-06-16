@@ -2,6 +2,7 @@
 
 return [
     // server info
+    'uri' => 'http://passport-server.test/',
     'authorize' => 'http://passport-server.test/oauth/authorize',
     'token' => 'http://passport-server.test/oauth/token',
     'register' => 'http://passport-server.test/register',

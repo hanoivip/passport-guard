@@ -1,5 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Route;
+
 Route::middleware('web')->get('/login', function () {
     $query = http_build_query([
         'client_id' => config('passport.client_id'),
@@ -22,7 +26,7 @@ Route::middleware('web')->get('/register', function () {
 })->name('register');
 Route::middleware('web')->get('/callback', function (Illuminate\Http\Request $request) {
     $http = new \GuzzleHttp\Client;
-    // Log::debug('.... code ' . $request->code);
+    Log::debug('.... code ' . $request->code);
     $response = $http->post(config('passport.token'), [
         'form_params' => [
             'client_id' => config('passport.client_id'),
@@ -33,7 +37,7 @@ Route::middleware('web')->get('/callback', function (Illuminate\Http\Request $re
         ],
     ]);
     $token = json_decode((string) $response->getBody(), true);
-    // Log::debug('.... access token ' . $token['access_token']);
+    Log::debug('.... access token ' . $token['access_token']);
     
     Cookie::queue(Cookie::make('access_token',  $token['access_token']));
     return view('hanoivip::landing');

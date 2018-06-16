@@ -32,7 +32,7 @@ class AccessTokenGuard implements Guard
         
         // retrieve via token
         $token = $this->getTokenForRequest();
-        Log::debug("Guard: token passed:" . $token);
+        // Log::debug("Guard: token passed:" . $token);
         
         if (!empty($token)) {
             // the token was found, how you want to pass?

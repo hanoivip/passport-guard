@@ -8,6 +8,11 @@ use Hanoivip\PassportGuard\Extensions\TokenToUserProvider;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * TODO: chua thuc hien duoc phan quyen voi laravel-permission
+ * @author hanoivip
+ *
+ */
 class AuthServiceProvider extends ServiceProvider
 {
     public function boot()
@@ -18,9 +23,15 @@ class AuthServiceProvider extends ServiceProvider
         ]);
         
         $this->loadRoutesFrom(__DIR__ . '/../routes/routes.php');
-        
         $this->loadViewsFrom(__DIR__ . '/../views', 'hanoivip');
+        //$this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        
+        // add guard provider
+        Auth::provider('passport', function ($app, array $config) {
+            return new TokenToUserProvider();
+        });
 
+        // add custom guard
         Auth::extend('access_token', function ($app, $name, array $config) {
             // automatically build the DI, put it as reference
             $userProvider = app(TokenToUserProvider::class);
