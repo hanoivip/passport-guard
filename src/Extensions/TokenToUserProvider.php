@@ -36,8 +36,7 @@ class TokenToUserProvider implements UserProvider
                 $user->app_uid = rand(1000000, 100000000);
                 $user->save();
             }*/
-            $expires = Carbon::now()->addMinutes(30);
-            Cache::add($token, $user, $expires);
+            Cache::put($token, $user, now()->addMinutes(30));
             return $user;
         }
     }
