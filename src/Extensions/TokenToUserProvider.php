@@ -22,10 +22,17 @@ class TokenToUserProvider implements UserProvider
     
     public function retrieveByToken($identifier, $token)
     {
-        if (Cache::has($token))
-            return Cache::get($token);
+        Log::debug("TokenUserProvider retrieveByToken:" . $token);
+        $key = md5($token);
+        if (Cache::has($key))
+        {
+            $user = Cache::get($key);
+            Log::debug("TokenUserProvider found token in cache." . print_r($user, true));
+            return $user;
+        }
         else 
         {
+            Log::debug("TokenUserProvider not found token in cache. Fetching..");
             $user = new AppUser();
             $user->fetchUserByCredentials(['access_token' => $token]);
             /*
@@ -36,12 +43,12 @@ class TokenToUserProvider implements UserProvider
                 $user->app_uid = rand(1000000, 100000000);
                 $user->save();
             }*/
-            Cache::put($token, $user, now()->addMinutes(30));
+            Cache::put($key, $user, now()->addMinutes(30));
             return $user;
         }
     }
 
-    public function retrieveByToken1($identifier, $token)
+    /*public function retrieveByToken1($identifier, $token)
     {
         $http = new \GuzzleHttp\Client;
         $response = $http->get(config('passport.user'),[
@@ -50,7 +57,7 @@ class TokenToUserProvider implements UserProvider
         $user = json_decode($response->getBody(), true);
         Log::debug("Fetch user data:" . print_r($user, true));
         return $user;
-    }
+    }*/
 
     public function retrieveByCredentials(array $credentials)
     {
