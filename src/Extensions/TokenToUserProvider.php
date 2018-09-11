@@ -22,17 +22,17 @@ class TokenToUserProvider implements UserProvider
     
     public function retrieveByToken($identifier, $token)
     {
-        Log::debug("TokenUserProvider retrieveByToken:" . $token);
+        //Log::debug("TokenUserProvider retrieveByToken:" . $token);
         $key = md5($token);
         if (Cache::has($key))
         {
             $user = Cache::get($key);
-            Log::debug("TokenUserProvider found token in cache." . print_r($user, true));
+            //Log::debug("TokenUserProvider found token in cache." . print_r($user, true));
             return $user;
         }
         else 
         {
-            Log::debug("TokenUserProvider not found token in cache. Fetching..");
+            //Log::debug("TokenUserProvider not found token in cache. Fetching..");
             $user = new AppUser();
             $user->fetchUserByCredentials(['access_token' => $token]);
             /*
