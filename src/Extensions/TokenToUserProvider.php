@@ -6,7 +6,7 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
-use Carbon\Carbon;
+use Hanoivip\Events\UserLogin;
 use Hanoivip\PassportGuard\Models\AppUser;
 
 class TokenToUserProvider implements UserProvider
@@ -44,6 +44,9 @@ class TokenToUserProvider implements UserProvider
                 $user->save();
             }*/
             Cache::put($key, $user, now()->addMinutes(30));
+            $uid = $user->getAuthIdentifier();
+            if (!empty($uid))
+                event(new UserLogin($uid));
             return $user;
         }
     }
