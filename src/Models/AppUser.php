@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class AppUser extends Model implements AuthenticatableContract, AuthorizableContract
 {
-    use HasRoles, Authorizable;
+    //use HasRoles, Authorizable;
+    use Authorizable;
     
     protected $guard_name = 'web';
     
@@ -18,6 +19,8 @@ class AppUser extends Model implements AuthenticatableContract, AuthorizableCont
     protected $email;
     
     protected $id;
+    
+    public $api_token;
     
     protected $fillable = [
         'id'
@@ -31,6 +34,7 @@ class AppUser extends Model implements AuthenticatableContract, AuthorizableCont
             $this->email = $data['email'];
             $this->username = $data['name'];
             $this->attributes['id'] = $data['id'];
+            $this->api_token = $data['api_token'];
         }
     }
     
@@ -46,6 +50,7 @@ class AppUser extends Model implements AuthenticatableContract, AuthorizableCont
             $this->username = $arr_user['name'];
             $this->email = $arr_user['email'];
             $this->id = $arr_user['id'];
+            $this->api_token = $token;
         }
         return $this;
     }
