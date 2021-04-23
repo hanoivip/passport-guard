@@ -28,6 +28,9 @@ Route::middleware('web')->get('/callback', function (Illuminate\Http\Request $re
     $http = new \GuzzleHttp\Client;
     Log::debug('.... code ' . $request->code);
     $response = $http->post(config('passport.token'), [
+        //'headers' => [
+        //    'Content-Type' => 'x-www-form-urlencoded',
+        //],
         'form_params' => [
             'client_id' => config('passport.client_id'),
             'client_secret' => config('passport.client_secret'),

@@ -32,9 +32,10 @@ class TokenToUserProvider implements UserProvider
         }
         else 
         {
-            //Log::debug("TokenUserProvider not found token in cache. Fetching..");
+            //dLog::debug("TokenUserProvider not found token in cache. Fetching..");
             $user = new AppUser();
             $user->fetchUserByCredentials(['access_token' => $token]);
+            //Log::debug(print_r($user, true));
             /*
             $record = AppUser::find($user->getAuthIdentifier());
             if (empty($record))
